@@ -103,6 +103,14 @@ module.exports = function(grunt) {
                 },
                 src: 'test/fixtures/a.scss',
                 dest: 'tmp/noWriteDest.scss'
+            },
+            sequential: {
+                options: {
+                    syntax: require('postcss-scss'),
+                    sequential: true
+                },
+                src: ['test/fixtures/a.scss', 'test/fixtures/a.css'],
+                dest: 'tmp/sequential.css'
             }
         },
 
