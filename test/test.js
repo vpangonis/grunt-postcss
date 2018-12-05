@@ -133,4 +133,12 @@ exports.gruntPostcss = {
         test.ok(!grunt.file.exists('tmp/noWriteDest.scss'));
         test.done();
     },
+
+    sequential: function(test) {
+        test.ok(grunt.file.exists('tmp/sequential.css'));
+        var actual = grunt.file.read('tmp/sequential.css');
+        var expected = grunt.file.read('test/fixtures/a.css');
+        test.strictEqual(actual, expected);
+        test.done();
+    },
 };
