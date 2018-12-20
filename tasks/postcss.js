@@ -182,6 +182,7 @@ module.exports = function(grunt) {
             Array.prototype.push.apply(tasks, src.map(function(filepath) {
                 var dest = f.dest || filepath;
                 var input = grunt.file.read(filepath);
+                tally.sizeBefore += input.length;
 
                 return createTask(input, filepath, dest, function(result) {
                     var warnings = result.warnings();
