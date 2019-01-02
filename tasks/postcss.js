@@ -149,7 +149,6 @@ module.exports = function(grunt) {
             maps: 0,
             diffs: 0,
             issues: 0,
-            issues: 0,
             sizeBefore: 0,
             sizeAfter: 0,
         };
