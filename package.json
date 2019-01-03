@@ -29,10 +29,10 @@
     "chalk": "^2.4.1",
     "diff": "^3.5.0",
     "maxmin": "^2.1.0",
-    "postcss": "^7.0.6"
+    "postcss": "^7.0.7"
   },
   "devDependencies": {
-    "cssnano": "^4.1.7",
+    "cssnano": "^4.1.8",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-jshint": "^2.0.0",
