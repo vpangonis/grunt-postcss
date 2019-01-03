@@ -1,6 +1,4 @@
-'use strict';
-
-var grunt = require('grunt');
+const grunt = require('grunt');
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -24,12 +22,12 @@ var grunt = require('grunt');
 
 exports.gruntPostcss = {
 
-    defaults: function(test) {
-        var actual = {
+    defaults: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/defaults.css'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/defaults.css'),
         };
 
@@ -38,12 +36,12 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    defaultsFn: function(test) {
-        var actual = {
+    defaultsFn: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/defaultsFn.css'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/defaults.css'),
         };
 
@@ -52,12 +50,12 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    mapInline: function(test) {
-        var actual = {
+    mapInline: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/mapInline.css'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/mapInline.css'),
         };
 
@@ -66,13 +64,13 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    mapSeparate: function(test) {
-        var actual = {
+    mapSeparate: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/mapSeparate.css'),
             map: grunt.file.read('tmp/mapSeparate.css.map'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/mapSeparate.css'),
             map: grunt.file.read('test/expected/mapSeparate.css.map'),
         };
@@ -82,13 +80,13 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    mapAnnotationPath: function(test) {
-        var actual = {
+    mapAnnotationPath: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/mapAnnotationPath.css'),
             map: grunt.file.read('tmp/maps/mapAnnotationPath.css.map'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/mapAnnotationPath.css'),
             map: grunt.file.read('test/expected/maps/mapAnnotationPath.css.map'),
         };
@@ -99,13 +97,13 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    diff: function(test) {
-        var actual = {
+    diff: (test) => {
+        const actual = {
             css: grunt.file.read('tmp/diff.css'),
             map: grunt.file.read('tmp/diff.css.diff'),
         };
 
-        var expected = {
+        const expected = {
             css: grunt.file.read('test/expected/diff.css'),
             map: grunt.file.read('test/expected/diff.css.diff'),
         };
@@ -115,12 +113,12 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    syntax: function(test) {
-        var actual = {
+    syntax: (test) => {
+        const actual = {
             scss: grunt.file.read('tmp/syntax.scss'),
         };
 
-        var expected = {
+        const expected = {
             scss: grunt.file.read('test/expected/syntax.scss'),
         };
 
@@ -128,16 +126,16 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    writeDest: function(test) {
+    writeDest: (test) => {
         test.ok(grunt.file.exists('tmp/doWriteDest.scss'));
         test.ok(!grunt.file.exists('tmp/noWriteDest.scss'));
         test.done();
     },
 
-    sequential: function(test) {
+    sequential: (test) => {
         test.ok(grunt.file.exists('tmp/sequential.css'));
-        var actual = grunt.file.read('tmp/sequential.css');
-        var expected = grunt.file.read('test/fixtures/a.css');
+        const actual = grunt.file.read('tmp/sequential.css');
+        const expected = grunt.file.read('test/fixtures/a.css');
         test.strictEqual(actual, expected);
         test.done();
     },

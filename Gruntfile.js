@@ -1,14 +1,14 @@
-var processors = [
+const processors = [
     require('cssnano')
 ];
 
-var processorsFn = function() {
+const processorsFn = () => {
     return [
         require('cssnano')
     ];
 };
 
-module.exports = function(grunt) {
+module.exports = (grunt) => {
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 

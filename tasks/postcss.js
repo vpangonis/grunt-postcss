@@ -1,15 +1,15 @@
 'use strict';
 
-var path = require('path');
-var postcss = require('postcss');
-var diff = require('diff');
-var chalk = require('chalk');
-var maxmin = require('maxmin');
+const path    = require('path');
+const postcss = require('postcss');
+const diff    = require('diff');
+const chalk   = require('chalk');
+const maxmin  = require('maxmin');
 
 module.exports = function(grunt) {
-    var options;
-    var processor;
-    var tasks;
+    let options;
+    let processor;
+    let tasks;
 
     /**
      * Returns an input map contents if a custom map path was specified
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
      */
     function getPrevMap(from) {
         if (typeof options.map.prev === 'string') {
-            var mapPath = options.map.prev + path.basename(from) + '.map';
+            const mapPath = `${options.map.prev + path.basename(from)}.map`;
 
             if (grunt.file.exists(mapPath)) {
                 return grunt.file.read(mapPath);
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
      * @returns {string}
      */
     function getSourcemapPath(to) {
-        return path.join(options.map.annotation, path.basename(to)) + '.map';
+        return `${path.join(options.map.annotation, path.basename(to))}.map`;
     }
 
     /**
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
      * @returns {boolean|string}
      */
     function getAnnotation(to) {
-        var annotation = true;
+        let annotation = true;
 
         if (typeof options.map.annotation === 'boolean') {
             annotation = options.map.annotation;
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             return Promise.resolve();
         }
 
-        var currentTask = tasks.shift();
+        let currentTask = tasks.shift();
 
         return process(currentTask.input, currentTask.from, currentTask.to).then(function(result) {
             currentTask.cb(result);
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
      * @returns {Promise|Object}
      */
     function createTask(input, from, to, cb) {
-        var newTask;
+        let newTask;
 
         if (options.sequential) {
             newTask = {
@@ -144,7 +144,7 @@ module.exports = function(grunt) {
         });
         tasks = [];
 
-        var tally = {
+        let tally = {
             sheets: 0,
             maps: 0,
             diffs: 0,
@@ -159,12 +159,12 @@ module.exports = function(grunt) {
             processor = postcss(options.processors);
         }
 
-        var done = this.async();
+        const done = this.async();
 
         this.files.forEach(function(f) {
-            var src = f.src.filter(function(filepath) {
+            let src = f.src.filter(function(filepath) {
                 if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn('Source file ' + chalk.cyan(filepath) + ' not found.');
+                    grunt.log.warn(`Source file ${chalk.cyan(filepath)} not found.`);
 
                     return false;
                 }
@@ -179,12 +179,12 @@ module.exports = function(grunt) {
             }
 
             Array.prototype.push.apply(tasks, src.map(function(filepath) {
-                var dest = f.dest || filepath;
-                var input = grunt.file.read(filepath);
+                const dest = f.dest || filepath;
+                const input = grunt.file.read(filepath);
                 tally.sizeBefore += input.length;
 
                 return createTask(input, filepath, dest, function(result) {
-                    var warnings = result.warnings();
+                    const warnings = result.warnings();
 
                     tally.issues += warnings.length;
 
@@ -195,29 +195,29 @@ module.exports = function(grunt) {
                     if (options.writeDest) {
                         tally.sizeAfter += result.css.length;
                         grunt.file.write(dest, result.css);
-                        log('File ' + chalk.cyan(dest) + ' created.' + chalk.dim(maxmin(input.length, result.css.length)));
+                        log(`File ${chalk.cyan(dest)} created.${chalk.dim(maxmin(input.length, result.css.length))}`);
                     }
 
                     tally.sheets += 1;
 
                     if (result.map) {
-                        var mapDest = dest + '.map';
+                        let mapDest = `${dest}.map`;
 
                         if (typeof options.map.annotation === 'string') {
                             mapDest = getSourcemapPath(dest);
                         }
 
                         grunt.file.write(mapDest, result.map.toString());
-                        log('File ' + chalk.cyan(dest + '.map') + ' created (source map).');
+                        log(`File ${chalk.cyan(`${dest}.map`)} created (source map).`);
 
                         tally.maps += 1;
                     }
 
                     if (options.diff) {
-                        var diffPath = (typeof options.diff === 'string') ? options.diff : dest + '.diff';
+                        const diffPath = (typeof options.diff === 'string') ? options.diff : `${dest}.diff`;
 
                         grunt.file.write(diffPath, diff.createPatch(dest, input, result.css));
-                        log('File ' + chalk.cyan(diffPath) + ' created (diff).');
+                        log(`File ${chalk.cyan(diffPath)} created (diff).`);
 
                         tally.diffs += 1;
                     }
@@ -228,23 +228,23 @@ module.exports = function(grunt) {
         runTasks().then(function() {
             if (tally.sheets) {
                 if (options.writeDest) {
-                    var size = chalk.dim(maxmin(tally.sizeBefore, tally.sizeAfter));
-                    grunt.log.ok(tally.sheets + ' processed ' + grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets') + ' created. ' + size);
+                    const size = chalk.dim(maxmin(tally.sizeBefore, tally.sizeAfter));
+                    grunt.log.ok(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. ${size}`);
                 } else {
-                    grunt.log.ok(tally.sheets + ' ' + grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets') + ' processed, no files written.');
+                    grunt.log.ok(`${tally.sheets} ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} processed, no files written.`);
                 }
             }
 
             if (tally.maps) {
-                grunt.log.ok(tally.maps + ' ' + grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps') + ' created.');
+                grunt.log.ok(`${tally.maps} ${grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps')} created.`);
             }
 
             if (tally.diffs) {
-                grunt.log.ok(tally.diffs + ' ' + grunt.util.pluralize(tally.diffs, 'diff/diffs') + ' created.');
+                grunt.log.ok(`${tally.diffs} ${grunt.util.pluralize(tally.diffs, 'diff/diffs')} created.`);
             }
 
             if (tally.issues) {
-                grunt.log.error(tally.issues + ' ' + grunt.util.pluralize(tally.issues, 'issue/issues') + ' found.');
+                grunt.log.error(`${tally.issues} ${grunt.util.pluralize(tally.issues, 'issue/issues')} found.`);
 
                 if (options.failOnError) {
                     return done(false);
