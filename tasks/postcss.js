@@ -1,10 +1,10 @@
 'use strict';
 
-const path    = require('path');
-const postcss = require('postcss');
-const diff    = require('diff');
-const chalk   = require('chalk');
-const maxmin  = require('maxmin');
+const path     = require('path');
+const postcss  = require('postcss');
+const diff     = require('diff');
+const { cyan } = require('kleur');
+const maxmin   = require('maxmin');
 
 module.exports = function(grunt) {
     let options;
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
         this.files.forEach(function(f) {
             let src = f.src.filter(function(filepath) {
                 if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn(`Source file ${chalk.cyan(filepath)} not found.`);
+                    grunt.log.warn(`Source file ${cyan(filepath)} not found.`);
 
                     return false;
                 }
@@ -195,7 +195,7 @@ module.exports = function(grunt) {
                     if (options.writeDest) {
                         tally.sizeAfter += result.css.length;
                         grunt.file.write(dest, result.css);
-                        log(`File ${chalk.cyan(dest)} created.${chalk.dim(maxmin(input.length, result.css.length))}`);
+                        log(`File ${cyan(dest)} created.${cyan(maxmin(input.length, result.css.length))}`);
                     }
 
                     tally.sheets += 1;
@@ -208,7 +208,7 @@ module.exports = function(grunt) {
                         }
 
                         grunt.file.write(mapDest, result.map.toString());
-                        log(`File ${chalk.cyan(`${dest}.map`)} created (source map).`);
+                        log(`File ${cyan(`${dest}.map`)} created (source map).`);
 
                         tally.maps += 1;
                     }
@@ -217,7 +217,7 @@ module.exports = function(grunt) {
                         const diffPath = (typeof options.diff === 'string') ? options.diff : `${dest}.diff`;
 
                         grunt.file.write(diffPath, diff.createPatch(dest, input, result.css));
-                        log(`File ${chalk.cyan(diffPath)} created (diff).`);
+                        log(`File ${cyan(diffPath)} created (diff).`);
 
                         tally.diffs += 1;
                     }
@@ -228,7 +228,7 @@ module.exports = function(grunt) {
         runTasks().then(function() {
             if (tally.sheets) {
                 if (options.writeDest) {
-                    const size = chalk.dim(maxmin(tally.sizeBefore, tally.sizeAfter));
+                    const size = cyan(maxmin(tally.sizeBefore, tally.sizeAfter));
                     grunt.log.ok(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. ${size}`);
                 } else {
                     grunt.log.ok(`${tally.sheets} ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} processed, no files written.`);

@@ -10,7 +10,7 @@ const processorsFn = () => {
 
 module.exports = (grunt) => {
     require('load-grunt-tasks')(grunt);
-    require('time-grunt')(grunt);
+    require('@lodder/time-grunt')(grunt);
 
     grunt.initConfig({
         jshint: {
