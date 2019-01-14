@@ -6,7 +6,7 @@ const diff     = require('diff');
 const { cyan } = require('kleur');
 const maxmin   = require('maxmin');
 
-module.exports = function(grunt) {
+module.exports = (grunt) => {
     let options;
     let processor;
     let tasks;
@@ -162,7 +162,7 @@ module.exports = function(grunt) {
         const done = this.async();
 
         this.files.forEach(function(f) {
-            let src = f.src.filter(function(filepath) {
+            let src = f.src.filter((filepath) => {
                 if (!grunt.file.exists(filepath)) {
                     grunt.log.warn(`Source file ${cyan(filepath)} not found.`);
 
@@ -178,17 +178,17 @@ module.exports = function(grunt) {
                 return done();
             }
 
-            Array.prototype.push.apply(tasks, src.map(function(filepath) {
+            Array.prototype.push.apply(tasks, src.map((filepath) => {
                 const dest = f.dest || filepath;
                 const input = grunt.file.read(filepath);
                 tally.sizeBefore += input.length;
 
-                return createTask(input, filepath, dest, function(result) {
+                return createTask(input, filepath, dest, (result) => {
                     const warnings = result.warnings();
 
                     tally.issues += warnings.length;
 
-                    warnings.forEach(function(msg) {
+                    warnings.forEach((msg) => {
                         grunt.log.error(msg.toString());
                     });
 
@@ -225,7 +225,7 @@ module.exports = function(grunt) {
             }));
         });
 
-        runTasks().then(function() {
+        runTasks().then(() => {
             if (tally.sheets) {
                 if (options.writeDest) {
                     const size = cyan(maxmin(tally.sizeBefore, tally.sizeAfter));
@@ -252,7 +252,7 @@ module.exports = function(grunt) {
             }
 
             done();
-        }).catch(function(error) {
+        }).catch((error) => {
             if (error.name === 'CssSyntaxError') {
                 grunt.fatal(error.message + error.showSourceCode());
             } else {
