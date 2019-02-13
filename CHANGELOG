@@ -1,4 +1,10 @@
 v1.0.7
+    date: 13-02-2019
+    changes:
+      - Updated PostCSS to 7.0.14
+      - Updated Kleur to 3.0.2
+      - Updated cssnano to 4.1.9
+v1.0.7
     date: 18-01-2019
     changes:
       - Updated PostCSS to 7.0.13
