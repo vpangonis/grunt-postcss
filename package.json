@@ -33,13 +33,13 @@
   },
   "devDependencies": {
     "cssnano": "^4.1.9",
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-nodeunit": "^2.0.0",
-    "load-grunt-tasks": "^4.0.0",
+    "load-grunt-tasks": "^5.0.0",
     "postcss-scss": "^2.0.0",
-    "@lodder/time-grunt": "^3.0.1"
+    "@lodder/time-grunt": "^4.0.0"
   },
   "peerDependencies": {
     "grunt": ">=1.0.3"

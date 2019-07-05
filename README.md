@@ -39,7 +39,7 @@ grunt.initConfig({
       },
 
       processors: [
-        require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
+        require('autoprefixer')(),
         require('cssnano')() // minify the result
       ]
     },
