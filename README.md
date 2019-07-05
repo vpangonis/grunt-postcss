@@ -163,7 +163,7 @@ postcss: {
   options: {
     map: true,
     processors: [
-      require('autoprefixer')({browsers: ['last 1 version']})
+      require('autoprefixer')()
     ]
   },
   dist: {
@@ -171,5 +171,7 @@ postcss: {
   }
 }
 ```
+
+And add the `browsers` to either your `package.json` or `.browserslistrc` file
 
 `browsers`, `cascade` and `remove` options are plugin-specific, so we pass them as an argument while require the plugin.
