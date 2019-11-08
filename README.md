@@ -1,7 +1,7 @@
 # grunt-postcss
 
 [![NPM Version](https://img.shields.io/npm/v/@lodder/grunt-postcss.svg)](https://npmjs.org/package/@lodder/grunt-postcss)
-[![Build Status](https://img.shields.io/travis/com/C-Lodder/grunt-postcss/master.svg)](https://travis-ci.com/C-Lodder/grunt-postcss)
+[![Build Status](https://github.com/C-Lodder/grunt-postcss/workflows/Tests/badge.svg)](https://github.com/C-Lodder/grunt-postcss/actions?workflow=Tests)
 [![dependencies Status](https://img.shields.io/david/C-Lodder/grunt-postcss.svg)](https://david-dm.org/C-Lodder/grunt-postcss)
 
 > Apply several post-processors to your CSS using [PostCSS](https://github.com/postcss/postcss).
