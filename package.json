@@ -1,6 +1,6 @@
 {
   "name": "@lodder/grunt-postcss",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "Apply several post-processors to your CSS using PostCSS",
   "author": {
     "name": "Dmitry Nikitenko",
@@ -9,7 +9,7 @@
   "repository": "C-Lodder/grunt-postcss",
   "license": "MIT",
   "engines": {
-    "node": ">= 6"
+    "node": ">= 8"
   },
   "scripts": {
     "test": "grunt test"
