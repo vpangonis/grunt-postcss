@@ -1,14 +1,16 @@
 # grunt-postcss
-[![NPM Version](https://img.shields.io/npm/v/@lodder/grunt-postcss.svg?style=flat)](https://npmjs.org/package/@lodder/grunt-postcss)
-[![Build Status](https://travis-ci.com/C-Lodder/grunt-postcss.svg?branch=master)](https://travis-ci.org/C-Lodder/grunt-postcss)
-[![Dependency Status](https://david-dm.org/C-Lodder/grunt-postcss.png)](https://david-dm.org/C-Lodder/grunt-postcss)
+
+[![NPM Version](https://img.shields.io/npm/v/@lodder/grunt-postcss.svg)](https://npmjs.org/package/@lodder/grunt-postcss)
+[![Build Status](https://img.shields.io/travis/com/C-Lodder/grunt-postcss/master.svg)](https://travis-ci.com/C-Lodder/grunt-postcss)
+[![dependencies Status](https://img.shields.io/david/C-Lodder/grunt-postcss.svg)](https://david-dm.org/C-Lodder/grunt-postcss)
 
 > Apply several post-processors to your CSS using [PostCSS](https://github.com/postcss/postcss).
 
 ## Getting Started
+
 This plugin requires Grunt `~1.0.3`
 
-**Note:** As of v2.0.0, NodeJS 8.x or above is required.
+**Note:** As of v2.0.0, Node.js 8.x or above is required.
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -24,8 +26,8 @@ grunt.loadNpmTasks('@lodder/grunt-postcss');
 
 ## Usage
 
-```
-$ npm i @lodder/grunt-postcss autoprefixer cssnano
+```shell
+npm i @lodder/grunt-postcss autoprefixer cssnano
 ```
 
 ```js
@@ -63,14 +65,16 @@ require('postcss-plugin')({option: value})
 ### Plugin options
 
 #### options.processors
-Type: `Array|Function`
-Default value: `[]`
+
+* Type: `Array|Function`
+* Default value: `[]`
 
 An array of PostCSS compatible post-processors. You can also use a function that returns an array of PostCSS post-processors.
 
 #### options.map
-Type: `Boolean|Object`
-Default value: `false`
+
+* Type: `Boolean|Object`
+* Default value: `false`
 
 If the `map` option isn't defined or is set to `false`, PostCSS won't create or update sourcemaps.
 
@@ -84,8 +88,9 @@ You can gain more control over sourcemap generation by assigning an object to th
 * `sourcesContent` (boolean): whether original file contents (e.g. Sass sources) will be included to a sourcemap. By default, it's `true` unless a sourcemap from a previous compilation step has the original contents missing.
 
 #### options.diff
-Type: `Boolean|String`
-Default value: `false`
+
+* Type: `Boolean|String`
+* Default value: `false`
 
 Set it to `true` if you want to get a patch file:
 
@@ -94,24 +99,28 @@ options: {
   diff: true // or 'custom/path/to/file.css.patch'
 }
 ```
+
 You can also specify a path where you want the file to be saved.
 
 #### options.sequential
-Type: `Boolean`
-Default value: `false`
 
-By default grunt-postcss will load all passed CSS files and immediately process them. Set this to `true` if you want files to be processed one by one. 
+* Type: `Boolean`
+* Default value: `false`
+
+By default grunt-postcss will load all passed CSS files and immediately process them. Set this to `true` if you want files to be processed one by one.
 This can help in case when you have a lot of CSS files and processing them causes an `out of memory` error.
 
 #### options.failOnError
-Type: `Boolean`
-Default value: `false`
+
+* Type: `Boolean`
+* Default value: `false`
 
 Set it to `true` if you want grunt to exit with an error on detecting a warning or error.
 
 #### options.writeDest
-Type: `Boolean`
-Default value: `true`
+
+* Type: `Boolean`
+* Default value: `true`
 
 Set it to `false` if you do not want the destination files to be written. This does not affect the processing of the `map` and `diff` options.
 
@@ -139,14 +148,14 @@ Unlike the traditional approach with separate plugins, grunt-postcss allows you 
 
 Autoprefixer is a PostCSS plugin, so first replace `grunt-autoprefixer` with `grunt-postcss` and `autoprefixer` plugin.
 
-```
-$ npm remove --save-dev grunt-autoprefixer
-$ npm install --save-dev @lodder/grunt-postcss autoprefixer
+```shell
+npm remove --save-dev grunt-autoprefixer
+npm install --save-dev @lodder/grunt-postcss autoprefixer
 ```
 
 Assuming you have a config like this:
 
-```
+```js
 autoprefixer: {
   options: {
     map: true,
@@ -160,7 +169,7 @@ autoprefixer: {
 
 Replace it with:
 
-```
+```js
 postcss: {
   options: {
     map: true,
@@ -174,6 +183,6 @@ postcss: {
 }
 ```
 
-And add the `browsers` to either your `package.json` or `.browserslistrc` file
+And add the `browsers` to either your `package.json` or `.browserslistrc` file.
 
 `browsers`, `cascade` and `remove` options are plugin-specific, so we pass them as an argument while require the plugin.
