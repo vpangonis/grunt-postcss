@@ -1,3 +1,9 @@
+v2.0.3
+    date: 12-05-2020
+    changes:
+      - Updated PostCSS to 7.0.30
+      - Remove kleur dependency
+      - Fix some logs not showing
 v2.0.2
     date: 15-04-2020
     changes:
