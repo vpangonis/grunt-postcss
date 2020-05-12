@@ -26,7 +26,6 @@
   ],
   "dependencies": {
     "diff": "^4.0.2",
-    "kleur": "^3.0.3",
     "maxmin": "^2.1.0",
     "postcss": "^7.0.30"
   },

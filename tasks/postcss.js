@@ -1,10 +1,9 @@
 'use strict';
 
-const path     = require('path');
-const postcss  = require('postcss');
-const diff     = require('diff');
-const { cyan } = require('kleur');
-const maxmin   = require('maxmin');
+const path = require('path');
+const postcss = require('postcss');
+const diff = require('diff');
+const maxmin = require('maxmin');
 
 module.exports = (grunt) => {
     let options;
@@ -125,13 +124,6 @@ module.exports = (grunt) => {
         return options.sequential ? runSequence() : Promise.all(tasks);
     }
 
-    /**
-     * @param {string} msg Log message
-     */
-    function log(msg) {
-        grunt.verbose.writeln(msg);
-    }
-
     grunt.registerMultiTask('postcss', 'Process CSS files.', function() {
         options = this.options({
             processors: [],
@@ -164,7 +156,7 @@ module.exports = (grunt) => {
         this.files.forEach(function(f) {
             let src = f.src.filter((filepath) => {
                 if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn(`Source file ${cyan(filepath)} not found.`);
+                    console.warn(`Source file \x1b[33m%s\x1b[0m not found.`, filepath);
 
                     return false;
                 }
@@ -173,7 +165,7 @@ module.exports = (grunt) => {
             });
 
             if (src.length === 0) {
-                grunt.log.error('No source files were found.');
+                console.error('\x1b[31mNo source files were found.\x1b[0m');
 
                 return done();
             }
@@ -189,13 +181,13 @@ module.exports = (grunt) => {
                     tally.issues += warnings.length;
 
                     warnings.forEach((msg) => {
-                        grunt.log.error(msg.toString());
+                        console.error('\x1b[31m%s\x1b[0m', msg.toString());
                     });
 
                     if (options.writeDest) {
                         tally.sizeAfter += result.css.length;
                         grunt.file.write(dest, result.css);
-                        log(`File ${cyan(dest)} created.${cyan(maxmin(input.length, result.css.length))}`);
+                        console.log(`>> File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m`, dest, maxmin(input.length, result.css.length));
                     }
 
                     tally.sheets += 1;
@@ -208,7 +200,7 @@ module.exports = (grunt) => {
                         }
 
                         grunt.file.write(mapDest, result.map.toString());
-                        log(`File ${cyan(`${dest}.map`)} created (source map).`);
+                        console.log(`>> File \x1b[36m%s\x1b[0m created (source map).`, dest.map);
 
                         tally.maps += 1;
                     }
@@ -217,7 +209,7 @@ module.exports = (grunt) => {
                         const diffPath = (typeof options.diff === 'string') ? options.diff : `${dest}.diff`;
 
                         grunt.file.write(diffPath, diff.createPatch(dest, input, result.css));
-                        log(`File ${cyan(diffPath)} created (diff).`);
+                        console.log(`>> File \x1b[36m%s\x1b[0m created (diff).`, diffPath);
 
                         tally.diffs += 1;
                     }
@@ -228,23 +220,23 @@ module.exports = (grunt) => {
         runTasks().then(() => {
             if (tally.sheets) {
                 if (options.writeDest) {
-                    const size = cyan(maxmin(tally.sizeBefore, tally.sizeAfter));
-                    grunt.log.ok(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. ${size}`);
+                    const size = maxmin(tally.sizeBefore, tally.sizeAfter);
+                    console.log(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. \x1b[36m%s\x1b[0m`, size);
                 } else {
-                    grunt.log.ok(`${tally.sheets} ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} processed, no files written.`);
+                    console.log(`${tally.sheets} ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} processed, no files written.`);
                 }
             }
 
             if (tally.maps) {
-                grunt.log.ok(`${tally.maps} ${grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps')} created.`);
+                console.log(`>> ${tally.maps} ${grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps')} created.`);
             }
 
             if (tally.diffs) {
-                grunt.log.ok(`${tally.diffs} ${grunt.util.pluralize(tally.diffs, 'diff/diffs')} created.`);
+                console.log(`>> ${tally.diffs} ${grunt.util.pluralize(tally.diffs, 'diff/diffs')} created.`);
             }
 
             if (tally.issues) {
-                grunt.log.error(`${tally.issues} ${grunt.util.pluralize(tally.issues, 'issue/issues')} found.`);
+                console.error(`${tally.issues} ${grunt.util.pluralize(tally.issues, 'issue/issues')} found.`);
 
                 if (options.failOnError) {
                     return done(false);
