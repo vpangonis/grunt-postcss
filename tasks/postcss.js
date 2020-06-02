@@ -200,7 +200,7 @@ module.exports = (grunt) => {
                         }
 
                         grunt.file.write(mapDest, result.map.toString());
-                        console.log(`>> File \x1b[36m%s\x1b[0m created (source map).`, dest.map);
+                        console.log(`>> File \x1b[36m%s\x1b[0m created (source map).`, `${dest}.map`);
 
                         tally.maps += 1;
                     }
