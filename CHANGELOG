@@ -1,3 +1,8 @@
+v2.0.4
+    date: 12-05-2020
+    changes:
+      - Updated PostCSS to 7.0.31
+      - Fix logging of source map output (thanks @jorrit)
 v2.0.3
     date: 12-05-2020
     changes:
