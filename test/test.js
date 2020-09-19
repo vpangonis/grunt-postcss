@@ -1,5 +1,4 @@
-const fs = require('fs');
-const { readFile, access } = fs.promises;
+const { readFile, access } = require('fs').promises;
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -146,8 +145,9 @@ exports.gruntPostcss = {
 
     writeDest: async(test) => {
         const checkExists = await fileExists('tmp/doWriteDest.css');
-        const checkNoExists = await fileExists('tmp/noWriteDest.css');
         test.ok(checkExists);
+
+        const checkNoExists = await fileExists('tmp/noWriteDest.css');
         test.ok(!checkNoExists);
         test.done();
     },
