@@ -25,12 +25,32 @@ const fileExists = async(file) => {
     try {
         await access(file);
         return true;
-    } catch (err) {
+    } catch (error) {
+        console.log(error);
         return false;
     }
 };
 
 exports.gruntPostcss = {
+
+    mapAnnotationPath: async(test) => {
+        const actual = {
+            css: await readFile('tmp/mapAnnotationPath.css', 'utf8'),
+            map: await readFile('tmp/maps/mapAnnotationPath.css.map', 'utf8'),
+        };
+
+        const expected = {
+            css: await readFile('test/expected/mapAnnotationPath.css', 'utf8'),
+            map: await readFile('test/expected/maps/mapAnnotationPath.css.map', 'utf8'),
+        };
+
+        test.strictEqual(actual.css, expected.css);
+        test.strictEqual(actual.map, expected.map);
+
+        const checkExists = await fileExists('tmp/mapAnnotationPath.css.map');
+        test.ok(!checkExists);
+        test.done();
+    },
 
     defaults: async(test) => {
         const actual = {
@@ -41,9 +61,9 @@ exports.gruntPostcss = {
             css: await readFile('test/expected/defaults.css', 'utf8'),
         };
 
-        const checkExists = await fileExists('tmp/defaults.css.map');
-
         test.strictEqual(actual.css, expected.css);
+
+        const checkExists = await fileExists('tmp/defaults.css.map');
         test.ok(!checkExists);
         test.done();
     },
@@ -57,9 +77,9 @@ exports.gruntPostcss = {
             css: await readFile('test/expected/defaults.css', 'utf8'),
         };
 
-        const checkExists = await fileExists('tmp/defaultsFn.css.map');
-
         test.strictEqual(actual.css, expected.css);
+
+        const checkExists = await fileExists('tmp/defaultsFn.css.map');
         test.ok(!checkExists);
         test.done();
     },
@@ -73,9 +93,9 @@ exports.gruntPostcss = {
             css: await readFile('test/expected/mapInline.css', 'utf8'),
         };
 
-        const checkExists = await fileExists('tmp/mapInline.css.map');
-
         test.strictEqual(actual.css, expected.css);
+
+        const checkExists = await fileExists('tmp/mapInline.css.map');
         test.ok(!checkExists);
         test.done();
     },
@@ -93,25 +113,6 @@ exports.gruntPostcss = {
 
         test.strictEqual(actual.css, expected.css);
         test.strictEqual(actual.map, expected.map);
-        test.done();
-    },
-
-    mapAnnotationPath: async(test) => {
-        const actual = {
-            css: await readFile('tmp/mapAnnotationPath.css', 'utf8'),
-            map: await readFile('tmp/maps/mapAnnotationPath.css.map', 'utf8'),
-        };
-
-        const expected = {
-            css: await readFile('test/expected/mapAnnotationPath.css', 'utf8'),
-            map: await readFile('test/expected/maps/mapAnnotationPath.css.map', 'utf8'),
-        };
-
-        const checkExists = await fileExists('tmp/mapAnnotationPath.css.map');
-
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
-        test.ok(!checkExists);
         test.done();
     },
 
