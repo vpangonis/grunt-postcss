@@ -65,7 +65,7 @@ module.exports = (grunt) => {
                 options: {
                     map: {
                         inline: false,
-                        annotation: 'tmp/maps/'
+                        annotation: '/tmp/maps/'
                     },
                     processors: processors
                 },
