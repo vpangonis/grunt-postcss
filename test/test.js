@@ -144,10 +144,10 @@ exports.gruntPostcss = {
     },
 
     writeDest: async(test) => {
-        const checkExists = await fileExists('tmp/doWriteDest.css');
+        const checkExists = await fileExists('tmp/doWriteDest.scss');
         test.ok(checkExists);
 
-        const checkNoExists = await fileExists('tmp/noWriteDest.css');
+        const checkNoExists = await fileExists('tmp/noWriteDest.scss');
         test.ok(!checkNoExists);
         test.done();
     },
