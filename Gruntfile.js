@@ -29,17 +29,6 @@ module.exports = (grunt) => {
         },
 
         postcss: {
-            mapAnnotationPath: {
-                options: {
-                    map: {
-                        inline: false,
-                        annotation: 'tmp/maps/'
-                    },
-                    processors: processors
-                },
-                src: 'test/fixtures/a.css',
-                dest: 'tmp/mapAnnotationPath.css'
-            },
             defaults: {
                 options: {
                     processors: processors
@@ -71,6 +60,17 @@ module.exports = (grunt) => {
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/mapSeparate.css'
+            },
+            mapAnnotationPath: {
+                options: {
+                    map: {
+                        inline: false,
+                        annotation: 'tmp/maps/'
+                    },
+                    processors: processors
+                },
+                src: 'test/fixtures/a.css',
+                dest: 'tmp/mapAnnotationPath.css'
             },
             diff: {
                 options: {
