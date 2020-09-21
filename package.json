@@ -9,7 +9,7 @@
   "repository": "C-Lodder/grunt-postcss",
   "license": "MIT",
   "engines": {
-    "node": ">= 14"
+    "node": "^10 || ^12 || >=14"
   },
   "scripts": {
     "test": "grunt test"
