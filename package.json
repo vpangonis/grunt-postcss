@@ -36,10 +36,10 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-nodeunit": "^2.1.0",
     "load-grunt-tasks": "^5.1.0",
-    "postcss-scss": "^3.0.0"
+    "postcss-scss": "^3.0.1"
   },
   "peerDependencies": {
     "grunt": ">=1.0.4",
-    "postcss": "^8.0.5"
+    "postcss": "^8.0.9"
   }
 }
