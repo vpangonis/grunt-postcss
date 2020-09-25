@@ -63,7 +63,8 @@ module.exports = (grunt) => {
                 prev: getPrevMap(from),
                 inline: (typeof options.map.inline === 'boolean') ? options.map.inline : true,
                 annotation: getAnnotation(to),
-                sourcesContent: (typeof options.map.sourcesContent === 'boolean') ? options.map.sourcesContent : true
+                sourcesContent: (typeof options.map.sourcesContent === 'boolean') ? options.map.sourcesContent : true,
+                absolute: (typeof options.map.absolute === 'boolean') ? options.map.absolute : false
             },
             from: from,
             to: to,

@@ -1,4 +1,4 @@
-const grunt = require('grunt');
+const { readFile, access } = require('fs').promises;
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -20,92 +20,74 @@ const grunt = require('grunt');
  test.ifError(value)
  */
 
+const fileExists = async(file) => {
+    try {
+        await access(file);
+        return true;
+    } catch (error) {
+        return false;
+    }
+};
+
 exports.gruntPostcss = {
 
-    defaults: (test) => {
+    defaults: async(test) => {
         const actual = {
-            css: grunt.file.read('tmp/defaults.css'),
+            css: await readFile('tmp/defaults.css', 'utf8'),
         };
 
         const expected = {
-            css: grunt.file.read('test/expected/defaults.css'),
+            css: await readFile('test/expected/defaults.css', 'utf8'),
         };
 
         test.strictEqual(actual.css, expected.css);
-        test.ok(!grunt.file.exists('tmp/defaults.css.map'));
+
+        const checkExists = await fileExists('tmp/defaults.css.map');
+        test.ok(!checkExists);
         test.done();
     },
 
-    defaultsFn: (test) => {
+    defaultsFn: async(test) => {
         const actual = {
-            css: grunt.file.read('tmp/defaultsFn.css'),
+            css: await readFile('tmp/defaultsFn.css', 'utf8'),
         };
 
         const expected = {
-            css: grunt.file.read('test/expected/defaults.css'),
+            css: await readFile('test/expected/defaults.css', 'utf8'),
         };
 
         test.strictEqual(actual.css, expected.css);
-        test.ok(!grunt.file.exists('tmp/defaultsFn.css.map'));
+
+        const checkExists = await fileExists('tmp/defaultsFn.css.map');
+        test.ok(!checkExists);
         test.done();
     },
 
-    mapInline: (test) => {
+    mapInline: async(test) => {
         const actual = {
-            css: grunt.file.read('tmp/mapInline.css'),
+            css: await readFile('tmp/mapInline.css', 'utf8'),
         };
 
         const expected = {
-            css: grunt.file.read('test/expected/mapInline.css'),
+            css: await readFile('test/expected/mapInline.css', 'utf8'),
         };
 
         test.strictEqual(actual.css, expected.css);
-        test.ok(!grunt.file.exists('tmp/mapInline.css.map'));
+
+        const checkExists = await fileExists('tmp/mapInline.css.map');
+        test.ok(!checkExists);
         test.done();
     },
 
-    mapSeparate: (test) => {
+    mapSeparate: async(test) => {
         const actual = {
-            css: grunt.file.read('tmp/mapSeparate.css'),
-            map: grunt.file.read('tmp/mapSeparate.css.map'),
+            css: await readFile('tmp/mapSeparate.css', 'utf8'),
+            map: await readFile('tmp/mapSeparate.css.map', 'utf8'),
         };
 
         const expected = {
-            css: grunt.file.read('test/expected/mapSeparate.css'),
-            map: grunt.file.read('test/expected/mapSeparate.css.map'),
-        };
-
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
-        test.done();
-    },
-
-    mapAnnotationPath: (test) => {
-        const actual = {
-            css: grunt.file.read('tmp/mapAnnotationPath.css'),
-            map: grunt.file.read('tmp/maps/mapAnnotationPath.css.map'),
-        };
-
-        const expected = {
-            css: grunt.file.read('test/expected/mapAnnotationPath.css'),
-            map: grunt.file.read('test/expected/maps/mapAnnotationPath.css.map'),
-        };
-
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
-        test.ok(!grunt.file.exists('tmp/mapAnnotationPath.css.map'));
-        test.done();
-    },
-
-    diff: (test) => {
-        const actual = {
-            css: grunt.file.read('tmp/diff.css'),
-            map: grunt.file.read('tmp/diff.css.diff'),
-        };
-
-        const expected = {
-            css: grunt.file.read('test/expected/diff.css'),
-            map: grunt.file.read('test/expected/diff.css.diff'),
+            css: await readFile('test/expected/mapSeparate.css', 'utf8'),
+            map: await readFile('test/expected/mapSeparate.css.map', 'utf8'),
         };
 
         test.strictEqual(actual.css, expected.css);
@@ -113,29 +95,69 @@ exports.gruntPostcss = {
         test.done();
     },
 
-    syntax: (test) => {
+    mapAnnotationPath: async(test) => {
         const actual = {
-            scss: grunt.file.read('tmp/syntax.scss'),
+            css: await readFile('tmp/mapAnnotationPath.css', 'utf8'),
+            map: await readFile('tmp/maps/mapAnnotationPath.css.map', 'utf8'),
         };
 
         const expected = {
-            scss: grunt.file.read('test/expected/syntax.scss'),
+            css: await readFile('test/expected/mapAnnotationPath.css', 'utf8'),
+            map: await readFile('test/expected/maps/mapAnnotationPath.css.map', 'utf8'),
+        };
+
+        test.strictEqual(actual.css, expected.css);
+        test.strictEqual(actual.map, expected.map);
+
+        const checkExists = await fileExists('tmp/mapAnnotationPath.css.map');
+        test.ok(!checkExists);
+        test.done();
+    },
+
+    diff: async(test) => {
+        const actual = {
+            css: await readFile('tmp/diff.css', 'utf8'),
+            map: await readFile('tmp/diff.css.diff', 'utf8'),
+        };
+
+        const expected = {
+            css: await readFile('test/expected/diff.css', 'utf8'),
+            map: await readFile('test/expected/diff.css.diff', 'utf8'),
+        };
+
+        test.strictEqual(actual.css, expected.css);
+        test.strictEqual(actual.map, expected.map);
+        test.done();
+    },
+
+    syntax: async(test) => {
+        const actual = {
+            scss: await readFile('tmp/syntax.scss', 'utf8'),
+        };
+
+        const expected = {
+            scss: await readFile('test/expected/syntax.scss', 'utf8'),
         };
 
         test.strictEqual(actual.scss, expected.scss);
         test.done();
     },
 
-    writeDest: (test) => {
-        test.ok(grunt.file.exists('tmp/doWriteDest.scss'));
-        test.ok(!grunt.file.exists('tmp/noWriteDest.scss'));
+    writeDest: async(test) => {
+        const checkExists = await fileExists('tmp/doWriteDest.scss');
+        test.ok(checkExists);
+
+        const checkNoExists = await fileExists('tmp/noWriteDest.scss');
+        test.ok(!checkNoExists);
         test.done();
     },
 
-    sequential: (test) => {
-        test.ok(grunt.file.exists('tmp/sequential.css'));
-        const actual = grunt.file.read('tmp/sequential.css');
-        const expected = grunt.file.read('test/fixtures/a.css');
+    sequential: async(test) => {
+        const checkExists = await fileExists('tmp/sequential.css');
+        test.ok(checkExists);
+
+        const actual = await readFile('tmp/sequential.css', 'utf8');
+        const expected = await readFile('test/fixtures/a.css', 'utf8');
         test.strictEqual(actual, expected);
         test.done();
     },
