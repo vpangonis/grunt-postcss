@@ -1,7 +1,7 @@
 v3.0.0
     date: 19-09-2020
     changes:
-      - Updated to PostCSS 8
+      - Updated to PostCSS 8 (Note PostCSS is now a peerDependency you must install yourself)
       - Drop support for NodeJS 8, 11 and 13
 v2.0.4
     date: 12-05-2020
