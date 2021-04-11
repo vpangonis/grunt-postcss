@@ -40,6 +40,6 @@
   },
   "peerDependencies": {
     "grunt": ">=1.0.4",
-    "postcss": "^8.0.9"
+    "postcss": "^8.2.9"
   }
 }
