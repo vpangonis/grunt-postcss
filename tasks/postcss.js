@@ -247,9 +247,9 @@ module.exports = (grunt) => {
             done();
         }).catch((error) => {
             if (error.name === 'CssSyntaxError') {
-                grunt.fatal(error.message + error.showSourceCode());
+                grunt.fail.fatal(error.message + error.showSourceCode());
             } else {
-                grunt.fatal(error);
+                grunt.fail.fatal(error);
             }
 
             done(error);
