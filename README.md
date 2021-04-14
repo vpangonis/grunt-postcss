@@ -8,7 +8,7 @@
 
 ## Getting Started
 
-This plugin requires Grunt `~1.0.3`
+This plugin requires Grunt `1.0.3` or above.
 
 **Note:** As of v3.0.0, Node.js 10.x or above is required.
 
