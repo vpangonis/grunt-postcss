@@ -246,6 +246,11 @@ module.exports = (grunt) => {
 
             done();
         }).catch((error) => {
+            
+            if(options.onError != undefined && typeof options.onError === 'function'){
+                options.onError(error);
+            }
+            
             if (error.name === 'CssSyntaxError') {
                 grunt.fail.fatal(error.message + error.showSourceCode());
             } else {
