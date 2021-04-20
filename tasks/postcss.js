@@ -247,7 +247,7 @@ module.exports = (grunt) => {
             done();
         }).catch((error) => {
             
-            if(options.onError != undefined && typeof options.onError === 'function'){
+            if (options.onError !== undefined && typeof options.onError === 'function') {
                 options.onError(error);
             }
             
