@@ -124,6 +124,13 @@ Set it to `true` if you want grunt to exit with an error on detecting a warning 
 
 Set it to `false` if you do not want the destination files to be written. This does not affect the processing of the `map` and `diff` options.
 
+#### options.onError
+
+* Type: `Function`
+* Default value: `null`
+
+This function is called when an error occurs and passes the error data.
+
 #### options.syntax, options.parser, options.stringifier
 
 Options to control [PostCSS custom syntaxes](https://github.com/postcss/postcss#custom-syntaxes).
