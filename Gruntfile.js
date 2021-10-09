@@ -1,3 +1,5 @@
+'use strict';
+
 const processors = [
     require('cssnano')
 ];
@@ -31,7 +33,7 @@ module.exports = (grunt) => {
         postcss: {
             defaults: {
                 options: {
-                    processors: processors
+                    processors
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/defaults.css'
@@ -46,7 +48,7 @@ module.exports = (grunt) => {
             mapInline: {
                 options: {
                     map: true,
-                    processors: processors
+                    processors
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/mapInline.css'
@@ -56,7 +58,7 @@ module.exports = (grunt) => {
                     map: {
                         inline: false
                     },
-                    processors: processors
+                    processors
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/mapSeparate.css'
@@ -67,7 +69,7 @@ module.exports = (grunt) => {
                         inline: false,
                         annotation: 'tmp/maps/'
                     },
-                    processors: processors
+                    processors
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/mapAnnotationPath.css'
@@ -75,7 +77,7 @@ module.exports = (grunt) => {
             diff: {
                 options: {
                     diff: true,
-                    processors: processors
+                    processors
                 },
                 src: 'test/fixtures/a.css',
                 dest: 'tmp/diff.css'
@@ -124,5 +126,4 @@ module.exports = (grunt) => {
 
     grunt.registerTask('test', ['clean', 'postcss', 'nodeunit']);
     grunt.registerTask('default', ['jshint', 'test']);
-
 };
