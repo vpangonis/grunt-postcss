@@ -58,16 +58,20 @@ module.exports = (grunt) => {
      * @returns {LazyResult}
      */
     function process(input, from, to) {
-        return processor.process(input, {
-            map: (typeof options.map === 'boolean') ? options.map : {
+        const map = typeof options.map === 'boolean' ?
+            options.map :
+            {
                 prev: getPrevMap(from),
                 inline: (typeof options.map.inline === 'boolean') ? options.map.inline : true,
                 annotation: getAnnotation(to),
                 sourcesContent: (typeof options.map.sourcesContent === 'boolean') ? options.map.sourcesContent : true,
                 absolute: (typeof options.map.absolute === 'boolean') ? options.map.absolute : false
-            },
-            from: from,
-            to: to,
+            };
+
+        return processor.process(input, {
+            map,
+            from,
+            to,
             parser: options.parser,
             stringifier: options.stringifier,
             syntax: options.syntax
@@ -79,13 +83,13 @@ module.exports = (grunt) => {
      * @returns {Promise}
      */
     function runSequence() {
-        if (!tasks.length) {
+        if (tasks.length === 0) {
             return Promise.resolve();
         }
 
         let currentTask = tasks.shift();
 
-        return process(currentTask.input, currentTask.from, currentTask.to).then(function(result) {
+        return process(currentTask.input, currentTask.from, currentTask.to).then((result) => {
             currentTask.cb(result);
             currentTask = null;
             return runSequence();
@@ -101,20 +105,9 @@ module.exports = (grunt) => {
      * @returns {Promise|Object}
      */
     function createTask(input, from, to, cb) {
-        let newTask;
-
-        if (options.sequential) {
-            newTask = {
-                input: input,
-                from: from,
-                to: to,
-                cb: cb
-            };
-        } else {
-            newTask = process(input, from, to).then(cb);
-        }
-
-        return newTask;
+        return options.sequential ?
+            { input, from, to, cb } :
+            process(input, from, to).then(cb);
     }
 
     /**
@@ -135,9 +128,7 @@ module.exports = (grunt) => {
             writeDest: true,
             sequential: false
         });
-        tasks = [];
-
-        let tally = {
+        const tally = {
             sheets: 0,
             maps: 0,
             diffs: 0,
@@ -145,19 +136,17 @@ module.exports = (grunt) => {
             sizeBefore: 0,
             sizeAfter: 0,
         };
-
-        if (typeof options.processors === 'function') {
-            processor = postcss(options.processors.call());
-        } else {
-            processor = postcss(options.processors);
-        }
-
         const done = this.async();
+        tasks = [];
 
-        this.files.forEach(function(f) {
-            let src = f.src.filter((filepath) => {
+        processor = typeof options.processors === 'function' ?
+            postcss(options.processors.call()) :
+            postcss(options.processors);
+
+        this.files.forEach((f) => {
+            const src = f.src.filter((filepath) => {
                 if (!grunt.file.exists(filepath)) {
-                    console.warn(`Source file \x1b[33m%s\x1b[0m not found.`, filepath);
+                    console.warn('Source file \x1b[33m%s\x1b[0m not found.', filepath);
 
                     return false;
                 }
@@ -181,14 +170,14 @@ module.exports = (grunt) => {
 
                     tally.issues += warnings.length;
 
-                    warnings.forEach((msg) => {
+                    for (const msg of warnings) {
                         console.error('\x1b[31m%s\x1b[0m', msg.toString());
-                    });
+                    }
 
                     if (options.writeDest) {
                         tally.sizeAfter += result.css.length;
                         grunt.file.write(dest, result.css);
-                        console.log(`>> File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m`, dest, maxmin(input.length, result.css.length));
+                        console.log('>> File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m', dest, maxmin(input.length, result.css.length));
                     }
 
                     tally.sheets += 1;
@@ -201,16 +190,16 @@ module.exports = (grunt) => {
                         }
 
                         grunt.file.write(mapDest, result.map.toString());
-                        console.log(`>> File \x1b[36m%s\x1b[0m created (source map).`, `${dest}.map`);
+                        console.log('>> File \x1b[36m%s\x1b[0m created (source map).', `${dest}.map`);
 
                         tally.maps += 1;
                     }
 
                     if (options.diff) {
-                        const diffPath = (typeof options.diff === 'string') ? options.diff : `${dest}.diff`;
+                        const diffPath = typeof options.diff === 'string' ? options.diff : `${dest}.diff`;
 
                         grunt.file.write(diffPath, diff.createPatch(dest, input, result.css));
-                        console.log(`>> File \x1b[36m%s\x1b[0m created (diff).`, diffPath);
+                        console.log('>> File \x1b[36m%s\x1b[0m created (diff).', diffPath);
 
                         tally.diffs += 1;
                     }
@@ -246,11 +235,10 @@ module.exports = (grunt) => {
 
             done();
         }).catch((error) => {
-            
             if (options.onError !== undefined && typeof options.onError === 'function') {
                 options.onError(error);
             }
-            
+
             if (error.name === 'CssSyntaxError') {
                 grunt.fail.fatal(error.message + error.showSourceCode());
             } else {
