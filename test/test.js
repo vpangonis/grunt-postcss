@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const { readFile, access } = require('fs').promises;
+const { readFile, access } = require('fs').promises
 
 /*
  ======== A Handy Little Nodeunit Reference ========
@@ -22,145 +22,145 @@ const { readFile, access } = require('fs').promises;
  test.ifError(value)
  */
 
-const fileExists = async(file) => {
-    try {
-        await access(file);
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
+const fileExists = async (file) => {
+  try {
+    await access(file)
+    return true
+  } catch (error) {
+    return false
+  }
+}
 
 exports.gruntPostcss = {
 
-    defaults: async(test) => {
-        const actual = {
-            css: await readFile('tmp/defaults.css', 'utf8'),
-        };
+  defaults: async (test) => {
+    const actual = {
+      css: await readFile('tmp/defaults.css', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/defaults.css', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/defaults.css', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
+    test.strictEqual(actual.css, expected.css)
 
-        const checkExists = await fileExists('tmp/defaults.css.map');
-        test.ok(!checkExists);
-        test.done();
-    },
+    const checkExists = await fileExists('tmp/defaults.css.map')
+    test.ok(!checkExists)
+    test.done()
+  },
 
-    defaultsFn: async(test) => {
-        const actual = {
-            css: await readFile('tmp/defaultsFn.css', 'utf8'),
-        };
+  defaultsFn: async (test) => {
+    const actual = {
+      css: await readFile('tmp/defaultsFn.css', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/defaults.css', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/defaults.css', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
+    test.strictEqual(actual.css, expected.css)
 
-        const checkExists = await fileExists('tmp/defaultsFn.css.map');
-        test.ok(!checkExists);
-        test.done();
-    },
+    const checkExists = await fileExists('tmp/defaultsFn.css.map')
+    test.ok(!checkExists)
+    test.done()
+  },
 
-    mapInline: async(test) => {
-        const actual = {
-            css: await readFile('tmp/mapInline.css', 'utf8'),
-        };
+  mapInline: async (test) => {
+    const actual = {
+      css: await readFile('tmp/mapInline.css', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/mapInline.css', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/mapInline.css', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
+    test.strictEqual(actual.css, expected.css)
 
-        const checkExists = await fileExists('tmp/mapInline.css.map');
-        test.ok(!checkExists);
-        test.done();
-    },
+    const checkExists = await fileExists('tmp/mapInline.css.map')
+    test.ok(!checkExists)
+    test.done()
+  },
 
-    mapSeparate: async(test) => {
-        const actual = {
-            css: await readFile('tmp/mapSeparate.css', 'utf8'),
-            map: await readFile('tmp/mapSeparate.css.map', 'utf8'),
-        };
+  mapSeparate: async (test) => {
+    const actual = {
+      css: await readFile('tmp/mapSeparate.css', 'utf8'),
+      map: await readFile('tmp/mapSeparate.css.map', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/mapSeparate.css', 'utf8'),
-            map: await readFile('test/expected/mapSeparate.css.map', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/mapSeparate.css', 'utf8'),
+      map: await readFile('test/expected/mapSeparate.css.map', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
-        test.done();
-    },
+    test.strictEqual(actual.css, expected.css)
+    test.strictEqual(actual.map, expected.map)
+    test.done()
+  },
 
-    mapAnnotationPath: async(test) => {
-        const actual = {
-            css: await readFile('tmp/mapAnnotationPath.css', 'utf8'),
-            map: await readFile('tmp/maps/mapAnnotationPath.css.map', 'utf8'),
-        };
+  mapAnnotationPath: async (test) => {
+    const actual = {
+      css: await readFile('tmp/mapAnnotationPath.css', 'utf8'),
+      map: await readFile('tmp/maps/mapAnnotationPath.css.map', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/mapAnnotationPath.css', 'utf8'),
-            map: await readFile('test/expected/maps/mapAnnotationPath.css.map', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/mapAnnotationPath.css', 'utf8'),
+      map: await readFile('test/expected/maps/mapAnnotationPath.css.map', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
+    test.strictEqual(actual.css, expected.css)
+    test.strictEqual(actual.map, expected.map)
 
-        const checkExists = await fileExists('tmp/mapAnnotationPath.css.map');
-        test.ok(!checkExists);
-        test.done();
-    },
+    const checkExists = await fileExists('tmp/mapAnnotationPath.css.map')
+    test.ok(!checkExists)
+    test.done()
+  },
 
-    diff: async(test) => {
-        const actual = {
-            css: await readFile('tmp/diff.css', 'utf8'),
-            map: await readFile('tmp/diff.css.diff', 'utf8'),
-        };
+  diff: async (test) => {
+    const actual = {
+      css: await readFile('tmp/diff.css', 'utf8'),
+      map: await readFile('tmp/diff.css.diff', 'utf8'),
+    }
 
-        const expected = {
-            css: await readFile('test/expected/diff.css', 'utf8'),
-            map: await readFile('test/expected/diff.css.diff', 'utf8'),
-        };
+    const expected = {
+      css: await readFile('test/expected/diff.css', 'utf8'),
+      map: await readFile('test/expected/diff.css.diff', 'utf8'),
+    }
 
-        test.strictEqual(actual.css, expected.css);
-        test.strictEqual(actual.map, expected.map);
-        test.done();
-    },
+    test.strictEqual(actual.css, expected.css)
+    test.strictEqual(actual.map, expected.map)
+    test.done()
+  },
 
-    syntax: async(test) => {
-        const actual = {
-            scss: await readFile('tmp/syntax.scss', 'utf8'),
-        };
+  syntax: async (test) => {
+    const actual = {
+      scss: await readFile('tmp/syntax.scss', 'utf8'),
+    }
 
-        const expected = {
-            scss: await readFile('test/expected/syntax.scss', 'utf8'),
-        };
+    const expected = {
+      scss: await readFile('test/expected/syntax.scss', 'utf8'),
+    }
 
-        test.strictEqual(actual.scss, expected.scss);
-        test.done();
-    },
+    test.strictEqual(actual.scss, expected.scss)
+    test.done()
+  },
 
-    writeDest: async(test) => {
-        const checkExists = await fileExists('tmp/doWriteDest.scss');
-        test.ok(checkExists);
+  writeDest: async (test) => {
+    const checkExists = await fileExists('tmp/doWriteDest.scss')
+    test.ok(checkExists)
 
-        const checkNoExists = await fileExists('tmp/noWriteDest.scss');
-        test.ok(!checkNoExists);
-        test.done();
-    },
+    const checkNoExists = await fileExists('tmp/noWriteDest.scss')
+    test.ok(!checkNoExists)
+    test.done()
+  },
 
-    sequential: async(test) => {
-        const checkExists = await fileExists('tmp/sequential.css');
-        test.ok(checkExists);
+  sequential: async (test) => {
+    const checkExists = await fileExists('tmp/sequential.css')
+    test.ok(checkExists)
 
-        const actual = await readFile('tmp/sequential.css', 'utf8');
-        const expected = await readFile('test/fixtures/a.css', 'utf8');
-        test.strictEqual(actual, expected);
-        test.done();
-    },
-};
+    const actual = await readFile('tmp/sequential.css', 'utf8')
+    const expected = await readFile('test/fixtures/a.css', 'utf8')
+    test.strictEqual(actual, expected)
+    test.done()
+  },
+}

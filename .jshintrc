@@ -1,5 +1,6 @@
 {
     "esversion": 8,
+    "asi": true,
     "curly": true,
     "eqeqeq": true,
     "expr": true,
