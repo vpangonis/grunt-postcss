@@ -1,3 +1,8 @@
+v3.1.0
+    date: 11-10-2021
+    changes:
+      - Move to the grunt logging API
+      - General code improvements
 v3.0.1
     date: 13-04-2021
     changes:
