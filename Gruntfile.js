@@ -119,7 +119,6 @@ module.exports = (grunt) => {
     nodeunit: {
       tests: ['test/test.js'],
     },
-
   })
 
   grunt.loadTasks('tasks')

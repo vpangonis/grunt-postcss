@@ -32,7 +32,6 @@ const fileExists = async (file) => {
 }
 
 exports.gruntPostcss = {
-
   defaults: async (test) => {
     const actual = {
       css: await readFile('tmp/defaults.css', 'utf8'),

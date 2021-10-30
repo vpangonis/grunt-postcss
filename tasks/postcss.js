@@ -121,7 +121,7 @@ module.exports = (grunt) => {
     return options.sequential ? runSequence() : Promise.all(tasks)
   }
 
-  grunt.registerMultiTask('postcss', 'Process CSS files.', function() {
+  grunt.registerMultiTask('postcss', 'Process CSS files.', function () {
     options = this.options({
       processors: [],
       map: false,
@@ -146,7 +146,7 @@ module.exports = (grunt) => {
       postcss(options.processors.call()) :
       postcss(options.processors)
 
-    this.files.forEach((f) => {
+    for (const f of this.files) {
       const src = f.src.filter((filepath) => {
         if (!grunt.file.exists(filepath)) {
           grunt.log.error('Source file \x1b[33m%s\x1b[0m not found.', filepath)
@@ -160,7 +160,8 @@ module.exports = (grunt) => {
       if (src.length === 0) {
         grunt.log.error('\x1b[31mNo source files were found.\x1b[0m')
 
-        return done()
+        done()
+        continue
       }
 
       Array.prototype.push.apply(tasks, src.map((filepath) => {
@@ -208,7 +209,7 @@ module.exports = (grunt) => {
           }
         })
       }))
-    })
+    }
 
     runTasks().then(() => {
       if (tally.sheets) {
