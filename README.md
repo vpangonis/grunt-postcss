@@ -1,7 +1,7 @@
 # grunt-postcss
 
-[![NPM Version](https://img.shields.io/npm/v/@lodder/grunt-postcss.svg)](https://npmjs.org/package/@lodder/grunt-postcss)
-[![Build Status](https://github.com/C-Lodder/grunt-postcss/workflows/Tests/badge.svg)](https://github.com/C-Lodder/grunt-postcss/actions?workflow=Tests)
+[![npm Version](https://img.shields.io/npm/v/@lodder/grunt-postcss.svg)](https://npmjs.org/package/@lodder/grunt-postcss)
+[![Build Status](https://img.shields.io/github/workflow/status/C-Lodder/grunt-postcss/Tests/master)](https://github.com/C-Lodder/grunt-postcss/actions?query=workflow%3ATests+branch%3Amaster)
 [![dependencies Status](https://img.shields.io/david/C-Lodder/grunt-postcss.svg)](https://david-dm.org/C-Lodder/grunt-postcss)
 
 > Apply several post-processors to your CSS using [PostCSS](https://github.com/postcss/postcss).
@@ -12,7 +12,7 @@ This plugin requires Grunt `1.0.3` or above.
 
 **Note:** As of v3.0.0, Node.js 10.x or above is required.
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [Grunt](https://gruntjs.com/) before, be sure to check out the [Getting Started](https://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](https://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm i --save-dev postcss @lodder/grunt-postcss
