@@ -4,6 +4,7 @@ const path = require('path')
 const postcss = require('postcss')
 const diff = require('diff')
 const maxmin = require('maxmin')
+const picocolors = require('picocolors')
 
 module.exports = (grunt) => {
   let options
@@ -149,7 +150,7 @@ module.exports = (grunt) => {
     for (const f of this.files) {
       const src = f.src.filter((filepath) => {
         if (!grunt.file.exists(filepath)) {
-          grunt.log.error('Source file \x1b[33m%s\x1b[0m not found.', filepath)
+          grunt.log.error(`Source file ${picocolors.cyan(filepath)} not found.`)
 
           return false
         }
@@ -158,7 +159,7 @@ module.exports = (grunt) => {
       })
 
       if (src.length === 0) {
-        grunt.log.error('\x1b[31mNo source files were found.\x1b[0m')
+        grunt.log.error(picocolors.red('No source files were found.'))
 
         done()
         continue
@@ -175,13 +176,13 @@ module.exports = (grunt) => {
           tally.issues += warnings.length
 
           for (const msg of warnings) {
-            grunt.log.error('\x1b[31m%s\x1b[0m', msg.toString())
+            grunt.log.error(picocolors.red(msg.toString()))
           }
 
           if (options.writeDest) {
             tally.sizeAfter += result.css.length
             grunt.file.write(dest, result.css)
-            grunt.log.ok('File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m', dest, maxmin(input.length, result.css.length))
+            grunt.log.ok(`File ${picocolors.cyan(dest)} created. ${picocolors.green(maxmin(input.length, result.css.length))}`)
           }
 
           tally.sheets += 1
@@ -194,7 +195,7 @@ module.exports = (grunt) => {
             }
 
             grunt.file.write(mapDest, result.map.toString())
-            grunt.log.ok('File \x1b[36m%s\x1b[0m created (source map).', `${dest}.map`)
+            grunt.log.ok(`File ${picocolors.cyan(`${dest}.map`)} created (source map).`)
 
             tally.maps += 1
           }
@@ -203,7 +204,7 @@ module.exports = (grunt) => {
             const diffPath = typeof options.diff === 'string' ? options.diff : `${dest}.diff`
 
             grunt.file.write(diffPath, diff.createPatch(dest, input, result.css))
-            grunt.log.ok('File \x1b[36m%s\x1b[0m created (diff).', diffPath)
+            grunt.log.ok(`File ${picocolors.cyan(diffPath)} created (diff).`)
 
             tally.diffs += 1
           }
@@ -215,7 +216,7 @@ module.exports = (grunt) => {
       if (tally.sheets) {
         if (options.writeDest) {
           const size = maxmin(tally.sizeBefore, tally.sizeAfter)
-          grunt.log.ok(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. \x1b[36m%s\x1b[0m`, size)
+          grunt.log.ok(`${tally.sheets} processed ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} created. ${picocolors.green(size)}`)
         } else {
           grunt.log.write(`${tally.sheets} ${grunt.util.pluralize(tally.sheets, 'stylesheet/stylesheets')} processed, no files written.`)
         }
