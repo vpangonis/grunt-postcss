@@ -61,10 +61,10 @@ module.exports = (grunt) => {
     const map = typeof options.map === 'boolean' ?
       options.map : {
         prev: getPrevMap(from),
-        inline: (typeof options.map.inline === 'boolean') ? options.map.inline : true,
+        inline: typeof options.map.inline === 'boolean' ? options.map.inline : true,
         annotation: getAnnotation(to),
-        sourcesContent: (typeof options.map.sourcesContent === 'boolean') ? options.map.sourcesContent : true,
-        absolute: (typeof options.map.absolute === 'boolean') ? options.map.absolute : false,
+        sourcesContent: typeof options.map.sourcesContent === 'boolean' ? options.map.sourcesContent : true,
+        absolute: typeof options.map.absolute === 'boolean' ? options.map.absolute : false,
       }
 
     return processor.process(input, {
@@ -180,7 +180,7 @@ module.exports = (grunt) => {
           if (options.writeDest) {
             tally.sizeAfter += result.css.length
             grunt.file.write(dest, result.css)
-            grunt.log.ok('>> File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m', dest, maxmin(input.length, result.css.length))
+            grunt.log.ok('File \x1b[36m%s\x1b[0m created. \x1b[36m%s\x1b[0m', dest, maxmin(input.length, result.css.length))
           }
 
           tally.sheets += 1
@@ -193,7 +193,7 @@ module.exports = (grunt) => {
             }
 
             grunt.file.write(mapDest, result.map.toString())
-            grunt.log.ok('>> File \x1b[36m%s\x1b[0m created (source map).', `${dest}.map`)
+            grunt.log.ok('File \x1b[36m%s\x1b[0m created (source map).', `${dest}.map`)
 
             tally.maps += 1
           }
@@ -202,7 +202,7 @@ module.exports = (grunt) => {
             const diffPath = typeof options.diff === 'string' ? options.diff : `${dest}.diff`
 
             grunt.file.write(diffPath, diff.createPatch(dest, input, result.css))
-            grunt.log.ok('>> File \x1b[36m%s\x1b[0m created (diff).', diffPath)
+            grunt.log.ok('File \x1b[36m%s\x1b[0m created (diff).', diffPath)
 
             tally.diffs += 1
           }
@@ -221,11 +221,11 @@ module.exports = (grunt) => {
       }
 
       if (tally.maps) {
-        grunt.log.ok(`>> ${tally.maps} ${grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps')} created.`)
+        grunt.log.ok(`${tally.maps} ${grunt.util.pluralize(tally.maps, 'sourcemap/sourcemaps')} created.`)
       }
 
       if (tally.diffs) {
-        grunt.log.ok(`>> ${tally.diffs} ${grunt.util.pluralize(tally.diffs, 'diff/diffs')} created.`)
+        grunt.log.ok(`${tally.diffs} ${grunt.util.pluralize(tally.diffs, 'diff/diffs')} created.`)
       }
 
       if (tally.issues) {
