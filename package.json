@@ -1,12 +1,12 @@
 {
-  "name": "@lodder/grunt-postcss",
+  "name": "@vpangonis/grunt-postcss",
   "version": "3.1.1",
   "description": "Apply several post-processors to your CSS using PostCSS",
   "author": {
     "name": "Dmitry Nikitenko",
     "email": "dima.nikitenko@gmail.com"
   },
-  "repository": "C-Lodder/grunt-postcss",
+  "repository": "vpangonis/grunt-postcss",
   "license": "MIT",
   "engines": {
     "node": "^10 || ^12 || >=14"
@@ -30,7 +30,7 @@
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@lodder/time-grunt": "^4.0.0",
+    "@vpangonis/time-grunt": "^4.0.0",
     "cssnano": "^5.0.8",
     "grunt": "^1.4.1",
     "grunt-contrib-clean": "^2.0.0",
