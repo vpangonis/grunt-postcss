@@ -14,19 +14,19 @@ This plugin requires Grunt `1.0.3` or above.
 If you haven't used [Grunt](https://gruntjs.com/) before, be sure to check out the [Getting Started](https://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](https://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm i --save-dev postcss @lodder/grunt-postcss
+npm i --save-dev postcss @vpangonis/grunt-postcss
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('@lodder/grunt-postcss');
+grunt.loadNpmTasks('@vpangonis/grunt-postcss');
 ```
 
 ## Usage
 
 ```shell
-npm i @lodder/grunt-postcss autoprefixer cssnano
+npm i @vpangonis/grunt-postcss autoprefixer cssnano
 ```
 
 ```js
@@ -156,7 +156,7 @@ Autoprefixer is a PostCSS plugin, so first replace `grunt-autoprefixer` with `gr
 
 ```shell
 npm remove --save-dev grunt-autoprefixer
-npm install --save-dev @lodder/grunt-postcss autoprefixer
+npm install --save-dev @vpangonis/grunt-postcss autoprefixer
 ```
 
 Assuming you have a config like this:
